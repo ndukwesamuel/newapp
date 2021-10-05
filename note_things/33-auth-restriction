@@ -1,0 +1,16 @@
+mixxing are argument we add in classes
+
+The LoginRequired mixin¶
+When using class-based views, you can achieve the same behavior as with login_required by using the LoginRequiredMixin. This mixin should be at the leftmost position in the inheritance list.
+
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class MyView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
+you have to put the LoginRequiredMixin first
+
+
+LOGIN_URL = '/login' this in the setting will make the page redirect back to the login view

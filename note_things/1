@@ -1,0 +1,31 @@
+1226
+
+This is the behaviour to adopt when the referenced object is deleted. It is not specific to Django; this is an SQL standard. Although Django has its own implementation on top of SQL. (1)
+
+There are seven possible actions to take when such event occurs:
+
+CASCADE: When the referenced object is deleted, also delete the objects that have references to it (when you remove a blog post for instance, you might want to delete comments as well). SQL equivalent: CASCADE.
+PROTECT: Forbid the deletion of the referenced object. To delete it you will have to delete all objects that reference it manually. SQL equivalent: RESTRICT.
+RESTRICT: (introduced in Django 3.1) Similar behavior as PROTECT that matches SQL's RESTRICT more accurately. (See django documentation example)
+SET_NULL: Set the reference to NULL (requires the field to be nullable). For instance, when you delete a User, you might want to keep the comments he posted on blog posts, but say it was posted by an anonymous (or deleted) user. SQL equivalent: SET NULL.
+SET_DEFAULT: Set the default value. SQL equivalent: SET DEFAULT.
+SET(...): Set a given value. This one is not part of the SQL standard and is entirely handled by Django.
+DO_NOTHING: Probably a very bad idea since this would create integrity issues in your database (referencing an object that actually doesn't exist). SQL equivalent: NO ACTION. (2)
+Source: Django documentation
+
+See also the documentation of PostgreSQL for instance.
+
+In most cases, CASCADE is the expected behaviour, but for every ForeignKey, you should always ask yourself what is the expected behaviour in this situation. PROTECT and SET_NULL are often useful. Setting CASCADE where it should not, can potentially delete all of your database in cascade, by simply deleting a single user.
+
+Additional note to clarify cascade direction
+
+It's funny to notice that the direction of the CASCADE action is not clear to many people. Actually, it's funny to notice that only the CASCADE action is not clear. I understand the cascade behavior might be confusing, however you must think that it is the same direction as any other action. Thus, if you feel that CASCADE direction is not clear to you, it actually means that on_delete behavior is not clear to you.
+
+In your database, a foreign key is basically represented by an integer field which value is the primary key of the foreign object. Let's say you have an entry comment_A, which has a foreign key to an entry article_B. If you delete the entry comment_A, everything is fine. article_B used to live without comment_A and don't bother if it's deleted. However, if you delete article_B, then comment_A panics! It never lived without article_B and needs it, and it's part of its attributes (article=article_B, but what is article_B???). This is where on_delete steps in, to determine how to resolve this integrity error, either by saying:
+
+"No! Please! Don't! I can't live without you!" (which is said PROTECT or RESTRICT in Django/SQL)
+"All right, if I'm not yours, then I'm nobody's" (which is said SET_NULL)
+"Good bye world, I can't live without article_B" and commit suicide (this is the CASCADE behavior).
+"It's OK, I've got spare lover, and I'll reference article_C from now" (SET_DEFAULT, or even SET(...)).
+"I can't face reality, and I'll keep calling your name even if that's the only thing left to me!" (DO_NOTHING)
+I hope it makes cascade direction clearer. :)

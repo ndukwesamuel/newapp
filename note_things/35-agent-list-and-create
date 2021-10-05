@@ -1,0 +1,20 @@
+now we want to create a form ffor agent
+
+
+class AgentCreateView(LoginRequiredMixin, CreateView):
+    template_name = "agent_create.html"
+    form_class = AgentModelForm
+
+    def get_success_url(self): 
+        return reverse("agents:agent")
+
+    def form_valid(self, form):
+        agent = form.save(commit=False)
+        agent.organisation = self.request.user.userprofile
+        agent.save()
+        return super(AgentCreateView, self).form_valid(form)
+
+
+
+
+the form_valid help to do littel scripts

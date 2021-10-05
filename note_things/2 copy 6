@@ -1,0 +1,6 @@
+we did an inside template
+
+
+in the class base view the queryset we use the object_list to loop
+
+or you do contecx_object_name

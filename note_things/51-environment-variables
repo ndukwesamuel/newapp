@@ -1,0 +1,11 @@
+enviromntent so 
+
+so for ur enviromntent to store private informantion
+
+django-environ is the Python package that allows you to use Twelve-factor methodology to configure your Django application with environment variables.
+
+For that, it gives you an easy way to configure Django application using environment variables obtained from an environment file and provided by the OS:
+
+
+
+python -m pip install django-environ

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="src/index.css">
+  <title>Motivation</title>
+</head>
+<body class='container center'>
+  <h1>My favorite quotes:</h1>
+  <div>
+    <ul id="quote-list">
+    </ul>
+  </div>
+  <hr>
+  <script>
+
+
+
+
+// console.log(data);
+
+
+
+
+
+
+function fetchData() {
+    fetch('https://api.nomics.com/v1/markets?key="')
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+}
+
+fetchData()
+
+
+//   function renderQuotes(data) {
+//       for (const q of data) {
+// //Find the container where we attach everything to
+//       const quoteUL = document.querySelector('#quote-list');
+// //Create all necessary elements
+//       const quoteLi = document.createElement('li');
+//       const blockQuote = document.createElement('blockquote');
+//       const p = document.createElement('p');
+//       const footer = document.createElement('footer');
+//       const br = document.createElement('br');
+//       const hr = document.createElement('hr')
+// //Add appropriate classes and ids. Grab data and insert if needed.
+//       quoteLi.className = 'quote-card';          //for styling
+//       blockQuote.className = 'blockquote';       //for styling
+//       p.className = 'mb-0';                      //for styling
+//       footer.className = 'blockquote-footer';    //for styling
+//       quoteLi.dataset.id = q.id
+// //Grab data and insert it into created elements
+//       p.innerHTML = q.quote;
+//       footer.innerHTML = q.author;
+// //Append everything to main container
+//       blockQuote.append(p, footer, br, hr);
+//       quoteLi.append(blockQuote);
+//       quoteUL.append(quoteLi);
+//       }
+//    }
+// //Call the function that will automatically run renderQuote() also 
+//    fetchData();
+// })
+
+  </script>
+</body>
+</html>

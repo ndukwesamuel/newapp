@@ -1,0 +1,32 @@
+for testing how to send mail
+
+
+
+from django.core.mail import send_mail
+
+        send_mail(
+            subject="You are invited to be an agent",
+            message="You were added as an agent on DJCRM. Please come login to start working.",
+            from_email="ndukwesamuel23@yahoo.com",
+            recipient_list=[user.email] or ['theuseremail@gmail.com']
+        ) 
+
+
+then move to the settings 
+
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '1025'
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
+
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
+
+
+
+
+to run the email server
+python -m smtpd -n -c DebuggingServer localhost: portnumber maybe 1020
